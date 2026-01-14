@@ -2,24 +2,29 @@ import { buildSchema } from 'graphql';
 import { createHandler } from 'graphql-http/lib/use/express';
 import express from 'express';
 
-// Construct a schema, using GraphQL schema language
-const schema = buildSchema(`type Query { hello: String } `);
+const schema = buildSchema(`type Query { ip: String } `);
 
-// The root provides a resolver function for each API endpoint
+function loggingMiddleware(req, _res, next) {
+    console.log('ip:', req.ip);
+    next();
+}
+
 const root = {
-    hello() {
-        return 'Hello world!';
+    ip(_args, context) {
+        return context.ip;
     }
 };
 
 const app = express();
-
-// Create and use the GraphQL handler.
+app.use(loggingMiddleware);
 app.all(
     '/graphql',
     createHandler({
         schema: schema,
-        rootValue: root
+        rootValue: root,
+        context: (req) => ({
+            ip: req.raw.ip
+        })
     })
 );
 
