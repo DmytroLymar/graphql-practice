@@ -2,29 +2,32 @@ import { buildSchema } from 'graphql';
 import { createHandler } from 'graphql-http/lib/use/express';
 import express from 'express';
 
-const schema = buildSchema(`type Query { ip: String } `);
-
-function loggingMiddleware(req, _res, next) {
-    console.log('ip:', req.ip);
-    next();
-}
+const schema = buildSchema(`
+    type Query {
+        quoteOfTheDay: String
+        random: Float!
+        rollThreeDice: [Int]
+    }    
+`);
 
 const root = {
-    ip(_args, context) {
-        return context.ip;
+    quoteOfTheDay() {
+        return Math.random() < 0.5 ? 'Take it easy' : 'Salvation lies within';
+    },
+    random() {
+        return Math.random();
+    },
+    rollThreeDice() {
+        return [1, 2, 3].map((_) => 1 + Math.floor(Math.random() * 6));
     }
 };
 
 const app = express();
-app.use(loggingMiddleware);
 app.all(
     '/graphql',
     createHandler({
         schema: schema,
-        rootValue: root,
-        context: (req) => ({
-            ip: req.raw.ip
-        })
+        rootValue: root
     })
 );
 
