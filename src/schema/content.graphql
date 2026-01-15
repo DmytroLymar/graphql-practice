@@ -1,0 +1,23 @@
+interface ContentItem {
+    id: ID!
+    title: String
+    publishedAt: String
+}
+
+type Article implements ContentItem {
+    id: ID!
+    title: String
+    publishedAt: String
+    bodyText: String
+}
+
+type PodcastEpisode implements ContentItem {
+    id: ID!
+    title: String
+    publishedAt: String
+    audioUrl: String
+}
+
+type Query {
+    content: [ContentItem!]!
+}
