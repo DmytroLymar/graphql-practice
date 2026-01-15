@@ -4,10 +4,15 @@ import { createHandler } from 'graphql-http/lib/use/express';
 import { root } from './resolvers/root.js';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
+import { DateTime } from './scalars/DateTimeScalar.js';
 
 const schema = loadSchemaSync('src/schema/**/*.graphql', {
     loaders: [new GraphQLFileLoader()]
 });
+
+schema.getType('DateTime').serialize = DateTime.serialize;
+schema.getType('DateTime').parseValue = DateTime.parseValue;
+schema.getType('DateTime').parseLiteral = DateTime.parseLiteral;
 
 const app = express();
 

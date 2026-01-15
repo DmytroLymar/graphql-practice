@@ -1,3 +1,5 @@
+scalar DateTime
+
 input MessageInput {
     content: String
     author: String
@@ -7,6 +9,7 @@ type Message {
     id: ID!
     content: String
     author: String
+    createdAt: DateTime!
 }
 
 extend type Query {

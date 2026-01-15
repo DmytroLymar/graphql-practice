@@ -6,7 +6,7 @@ export const messagesRoot = {
 
     createMessage: ({ input }) => {
         const id = String(Object.keys(fakeDatabase).length + 1);
-        const message = { id, ...input };
+        const message = { id, ...input, createdAt: new Date() };
         fakeDatabase[id] = message;
         return message;
     },
