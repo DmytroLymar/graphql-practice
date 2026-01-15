@@ -1,0 +1,23 @@
+union SearchResult = Book | Author | Publisher
+
+type Book {
+    id: ID!
+    title: String
+    isbn: String
+}
+
+type Author {
+    id: ID!
+    name: String
+    bio: String
+}
+
+type Publisher {
+    id: ID!
+    name: String
+    catalogSize: Int
+}
+
+type Query {
+    search(text: String!): [SearchResult!]!
+}

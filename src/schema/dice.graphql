@@ -1,0 +1,8 @@
+type RandomDie {
+    rollOnce: Int!
+    roll(numRolls: Int!): [Int]!
+}
+
+extend type Query {
+    getDie(numSides: Int): RandomDie
+}

@@ -1,0 +1,25 @@
+type User {
+    id: ID!
+    name: String!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
+type UserEdge {
+    node: User
+    cursor: String!
+}
+
+type UserConnection {
+    edges: [UserEdge!]!
+    pageInfo: PageInfo!
+}
+
+extend type Query {
+    users(first: Int, after: String): UserConnection!
+}
