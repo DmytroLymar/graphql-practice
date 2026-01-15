@@ -9,12 +9,12 @@ type Message {
     author: String
 }
 
-type Query {
+extend type Query {
     getMessage(id: ID!): Message
-    getMessages: [Message]
+    getMessages: [Message!]!
 }
 
-type Mutation {
+extend type Mutation {
     createMessage(input: MessageInput): Message
     updateMessage(id: ID!, input: MessageInput): Message
 }

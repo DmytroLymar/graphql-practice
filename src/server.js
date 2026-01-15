@@ -5,7 +5,7 @@ import { root } from './resolvers/root.js';
 import { loadSchemaSync } from '@graphql-tools/load';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
-const schema = loadSchemaSync('src/schema/index.graphql', {
+const schema = loadSchemaSync('src/schema/**/*.graphql', {
     loaders: [new GraphQLFileLoader()]
 });
 
